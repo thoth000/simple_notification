@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:simple_notification/function/notification.dart';
 import 'package:simple_notification/pages/home/home.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  initializeNotification();
   runApp(MyApp());
 }
 
