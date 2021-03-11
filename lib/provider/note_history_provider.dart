@@ -14,7 +14,7 @@ class NoteHistoryProvider extends ChangeNotifier{
   Future<void> remove(int index) async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> noteData = noteHistory[index];
-    await prefs.remove(noteData[2]);
+    await prefs.remove(noteData[3]);
     noteHistory.removeAt(index);
     notifyListeners();
   }

@@ -16,7 +16,7 @@ class NoteListState extends State<NoteList> {
   Future<void> getNoteHistory() async {
     List<List<String>> noteList = [];
     prefs = await SharedPreferences.getInstance();
-    noteID = prefs.getInt("noteID")??0;
+    noteID = prefs.getInt("noteID") ?? 0;
     for (int i = noteID; i > -1; i--) {
       List<String> note = prefs.getStringList(i.toString()) ?? [];
       if (note.isNotEmpty) {
@@ -24,7 +24,6 @@ class NoteListState extends State<NoteList> {
       }
     }
     Provider.of<NoteHistoryProvider>(context, listen: false).reload(noteList);
-    print(noteList);
   }
 
   @override
@@ -45,9 +44,15 @@ class NoteListState extends State<NoteList> {
         return ListView(
           children: List.generate(noteHistory.length, (index) {
             final noteData = noteHistory[index];
-            final String content = noteData[0];
-            final String timeString = noteData[1];
-            return NoteContent(content: content, timeString: timeString,index:index,);
+            final String title = noteData[0];
+            final String content = noteData[1];
+            final String timeString = noteData[2];
+            return NoteContent(
+              title: title,
+              content: content,
+              timeString: timeString,
+              index: index,
+            );
           }),
         );
       } else {
