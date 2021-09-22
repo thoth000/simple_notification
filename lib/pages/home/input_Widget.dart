@@ -19,9 +19,9 @@ class _InputWidgetState extends State<InputWidget> {
   void initState() {
     super.initState();
     contentEditingController = TextEditingController();
-    titleEditingController = TextEditingController(text: "通知メモ");
+    titleEditingController = TextEditingController(text: "");
     content = "";
-    title = "通知メモ";
+    title = "";
     Future(() async {
       prefs = await SharedPreferences.getInstance();
     });
@@ -50,8 +50,8 @@ class _InputWidgetState extends State<InputWidget> {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.all(20),
-          padding: EdgeInsets.all(20),
+          margin: EdgeInsets.all(16),
+          padding: EdgeInsets.all(16),
           decoration: BoxDecoration(
             border: Border.all(
               color: Colors.blue,
@@ -70,7 +70,7 @@ class _InputWidgetState extends State<InputWidget> {
                   ),
                 ),
                 style: TextStyle(
-                  fontSize: 26,
+                  fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
                 onChanged: (input) {
@@ -82,7 +82,7 @@ class _InputWidgetState extends State<InputWidget> {
                 },
               ),
               const SizedBox(
-                height: 20,
+                height: 16,
               ),
               TextField(
                 decoration: InputDecoration(
@@ -91,6 +91,8 @@ class _InputWidgetState extends State<InputWidget> {
                     color: Color(0xFFA0A0A0),
                   ),
                 ),
+                minLines: 1,
+                maxLines: 10,
                 controller: contentEditingController,
                 style: TextStyle(
                   fontSize: 20,
@@ -99,21 +101,85 @@ class _InputWidgetState extends State<InputWidget> {
                   content = input;
                 },
               ),
+              const SizedBox(
+                height: 16,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.redAccent,
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: InkWell(
+                      onTap: (){
+                        title="";
+                        content="";
+                        titleEditingController.clear();
+                        contentEditingController.clear();
+                        FocusScope.of(context).unfocus();
+                      },
+                      radius: 10,
+                      child: Center(
+                        child: Text(
+                          " 書き込み消去 ",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.redAccent,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.blue,
+                        width: 1.5,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: InkWell(
+                      onTap: (){
+                        FocusScope.of(context).unfocus();
+                      },
+                      radius: 10,
+                      child: Center(
+                        child: Text(
+                          " 書き込み完了 ",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
         Container(
-          height: 70,
+          height: 60,
           width: 200,
           decoration: BoxDecoration(
             border: Border.all(
               color: Colors.blue,
-              width: 4,
+              width: 3,
             ),
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(16),
           ),
           child: InkWell(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(16),
             onTap: () async {
               final int noteID = await saveNotification(
                 title: title,
@@ -125,13 +191,13 @@ class _InputWidgetState extends State<InputWidget> {
                 noteID: noteID,
               );
               contentEditingController.clear();
-              titleEditingController.text = "通知メモ";
+              titleEditingController.clear();
             },
             child: Center(
               child: Text(
                 "通知する",
                 style: TextStyle(
-                  fontSize: 30,
+                  fontSize: 24,
                   fontWeight: FontWeight.bold,
                   color: const Color(0xFF505050),
                 ),
@@ -140,33 +206,33 @@ class _InputWidgetState extends State<InputWidget> {
           ),
         ),
         SizedBox(
-          height: 20,
+          height: 16,
         ),
         Container(
-          height: 70,
+          height: 60,
           width: 200,
           decoration: BoxDecoration(
             border: Border.all(
               color: Colors.blue,
-              width: 4,
+              width: 3,
             ),
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(16),
           ),
           child: InkWell(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(16),
             onTap: () async {
               await saveNotification(
                 title: title,
                 content: content,
               );
               contentEditingController.clear();
-              titleEditingController.text = "通知メモ";
+              titleEditingController.clear();
             },
             child: Center(
               child: Text(
                 "通知せずメモする",
                 style: TextStyle(
-                  fontSize: 22,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: const Color(0xFF707070),
                 ),
