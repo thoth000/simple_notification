@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_notification/function/date_time_format.dart';
@@ -38,6 +40,21 @@ class _InputWidgetState extends State<InputWidget> {
     await prefs.setInt("noteID", noteID + 1);
     return noteID;
   }
+
+  final random = Random();
+
+  final advaiceWords = [
+    "通知メモはふとした時に役立ちます",
+    "今は必要なくてもいつか必ず...",
+    "何を考えていたか忘れないように",
+    "通知欄は忘れてはいけないものを置いておく場所",
+    "通知欄を活用しよう",
+    "このアプリが役立ちますように",
+    "通知メモはデータ容量をほとんど使いません",
+    "アプリの評価をもらえると嬉しいです",
+    "このアプリの改善点を見つけてください",
+    ""
+  ];
 
   @override
   void dispose() {
@@ -238,6 +255,15 @@ class _InputWidgetState extends State<InputWidget> {
                 ),
               ),
             ),
+          ),
+        ),
+        const SizedBox(
+          height: 32,
+        ),
+        Text(
+          advaiceWords[random.nextInt(8)],
+          style: TextStyle(
+            fontSize: 16,
           ),
         ),
       ],
